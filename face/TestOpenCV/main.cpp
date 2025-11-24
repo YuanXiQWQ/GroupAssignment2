@@ -16,13 +16,13 @@
  */
 namespace{
     /**
-     * Check if the path contains the "outputs" component
-     * @param path The path to inspect for an "outputs" directory component
-     * @return true if any segment of the path equals "outputs"
+     * Check if the path contains the "output" component
+     * @param path The path to inspect for an "output" directory component
+     * @return true if any segment of the path equals "output"
      */
-    bool contains_outputs_component(const std::filesystem::path &path){
+    bool contains_output_component(const std::filesystem::path &path){
         return std::any_of(path.begin(), path.end(), [](const auto &component){
-            return component == "outputs";
+            return component == "output";
         });
     }
 
@@ -78,7 +78,7 @@ int main(){
     /* =============================== File System =================================== */
     const std::filesystem::path start_dir = std::filesystem::current_path();
     const std::filesystem::path output_dir = std::filesystem::absolute(
-            start_dir / "outputs");
+            start_dir / "output");
 
     // Resolve image file paths reachable from the working directory
     std::vector<std::filesystem::path> resolved_paths;
@@ -90,7 +90,7 @@ int main(){
             const auto &path = entry->path();
 
             if(entry->is_directory()){
-                if(contains_outputs_component(path)){
+                if(contains_output_component(path)){
                     entry.disable_recursion_pending();
                 }
                 continue;
@@ -99,7 +99,7 @@ int main(){
             if(! entry->is_regular_file()){
                 continue;
             }
-            if(contains_outputs_component(path)){
+            if(contains_output_component(path)){
                 continue;
             }
             if(is_supported_image_file(path)){
@@ -111,7 +111,7 @@ int main(){
         return 1;
     }
 
-    // Create the `outputs/` directory on-demand without throwing on failure
+    // Create the `output/` directory on-demand without throwing on failure
     std::filesystem::create_directories(output_dir);
 
     for(const auto &image_path: resolved_paths){

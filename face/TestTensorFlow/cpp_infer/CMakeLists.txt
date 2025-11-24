@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(tf_face_infer CXX)
+project(TestTensorFlow CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,11 +12,11 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(/usr/local/include)
 link_directories(/usr/local/lib)
 
-add_executable(tf_face_infer
+add_executable(TestTensorFlow
         facedetectcnn-data.cpp
         facedetectcnn-model.cpp
         facedetectcnn.cpp
         facedetectcnn.h
         main.cpp
         facedetection_export.h)
-target_link_libraries(tf_face_infer ${OpenCV_LIBS} tensorflow)
+target_link_libraries(TestTensorFlow ${OpenCV_LIBS} tensorflow)

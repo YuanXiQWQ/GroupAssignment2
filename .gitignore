@@ -1,8 +1,43 @@
+# IDE
 .idea/
+.vscode/
+*.iml
 
+# CMake build folders
+cmake-build-debug/
+cmake-build-release/
+build/
+out/
 
-libfacedetection
+# C++ out
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.lib
+*.a
+*.out
+*.pdb
 
-TestTensorFlow/data/
-
+# Python out
+__pycache__/
 pytest-cache-files-25bcyarp/
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+pytest-cache/
+*.egg-info/
+
+# OS system files
+.DS_Store
+Thumbs.db
+
+# Dataset and temp
+face/TestTensorFlow/data/
+**/datasets/
+**/outputs/
+**/output/
+**/temp/
+**/cache/
