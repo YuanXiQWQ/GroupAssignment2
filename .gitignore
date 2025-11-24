@@ -2,3 +2,7 @@
 
 
 libfacedetection
+
+TestTensorFlow/data/
+
+pytest-cache-files-25bcyarp/
