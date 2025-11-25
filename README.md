@@ -6,6 +6,8 @@ BCIT's CST COMP3940 Group Assignment 2 (Group ML & AI)
 
 ## Schedule
 
+[Status Report](https://docs.google.com/document/d/1OIRVu9jolqiOJuVwjLCBu-g_l74kewoF5Gi8adFEV1k/edit?usp=sharing)
+
 ### Due Nov 19th :  [4 marks] Individual Demos online or in-person
 
 - **Persphone**:  Install & Configure OpenCV on Linux to gain control of your webcam to grab pictures and video.
