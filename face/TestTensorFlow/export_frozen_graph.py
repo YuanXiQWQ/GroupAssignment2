@@ -4,7 +4,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 try:
-    from tensorflow.python.framework.convert_to_constants import (
+    from tensorflow.python.framework.convert_to_constants import (  # type: ignore[attr-defined]
         convert_variables_to_constants_v2,
     )
 except ImportError as exc:  # pragma: no cover - depends on TF build
@@ -22,22 +22,21 @@ def main() -> None:
     if not keras_path.exists():
         raise FileNotFoundError(f"Missing Keras model file: {keras_path}")
 
+    savedmodel_dir = saved_models_dir / "face_classifier_savedmodel"
+    if not savedmodel_dir.exists():
+        raise FileNotFoundError(
+            "Missing SavedModel export. Please re-run training or export SavedModel."
+        )
+
     pb_path = saved_models_dir / "face_classifier_frozen.pb"
     pbtxt_path = saved_models_dir / "face_classifier_frozen.pbtxt"
 
-    model = keras.models.load_model(keras_path)
+    # Load SavedModel signature to ensure variables are folded for inference
+    loaded = tf.saved_model.load(savedmodel_dir)
+    if "serving_default" not in loaded.signatures:
+        raise KeyError("SavedModel missing 'serving_default' signature")
 
-    # Build a concrete function for inference
-    input_tensor = model.inputs[0]
-    input_name = input_tensor.name.split(":")[0]
-
-    concrete_func = tf.function(model).get_concrete_function(
-        tf.TensorSpec(
-            shape=input_tensor.shape,
-            dtype=input_tensor.dtype,
-            name=input_name,
-        )
-    )
+    concrete_func = loaded.signatures["serving_default"]
 
     frozen_func = convert_variables_to_constants_v2(concrete_func)
     graph_def = frozen_func.graph.as_graph_def()
