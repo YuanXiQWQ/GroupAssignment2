@@ -1,7 +1,6 @@
 import pathlib
 
 import tensorflow as tf
-from tensorflow import keras
 
 try:
     from tensorflow.python.framework.convert_to_constants import (  # type: ignore[attr-defined]
